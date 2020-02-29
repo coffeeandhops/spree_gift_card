@@ -16,6 +16,11 @@
               <%= check_box_tag :allow_gift_card_redeem, 1, Spree::Config.allow_gift_card_redeem %>
               <%= Spree.t(:allow_gift_card_redeem) %>
             <% end %>
+            <%= label_tag :emails_must_match do %>
+              <%= hidden_field_tag :emails_must_match, 0 %>
+              <%= check_box_tag :emails_must_match, 1, Spree::Config.emails_must_match %>
+              <%= Spree.t(:emails_must_match) %>
+            <% end %>
           </div>
         </div>
       </div>
