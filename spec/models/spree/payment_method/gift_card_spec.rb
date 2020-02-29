@@ -13,6 +13,10 @@ describe Spree::PaymentMethod::GiftCard do
     let(:auth_amount) { gift_card.amount_remaining * 100 }
     let(:gift_card) { create(:gift_card) }
 
+    before do
+      Spree::Config[:emails_must_match] = true
+    end
+
     context 'with an invalid gift card' do
       let(:gift_card) { nil }
       let(:auth_amount) { 10 }
@@ -35,10 +39,24 @@ describe Spree::PaymentMethod::GiftCard do
     end
 
     context "when the order email is not same as gift card email" do
+
       let(:gift_card) { create(:gift_card_with_other_email) }
 
       it "declines other email's gift card" do
         is_expected.to_not be_success
+      end
+    end
+
+
+    context "when the order email is not same as gift card email emails_must_match=false" do
+      before do
+        Spree::Config[:emails_must_match] = false
+      end
+
+      let(:gift_card) { create(:gift_card_with_other_email) }
+
+      it "allows other email's gift card" do
+        is_expected.to be_success
       end
     end
 
@@ -178,6 +196,10 @@ describe Spree::PaymentMethod::GiftCard do
       Spree::PaymentMethod::GiftCard.new.purchase(auth_amount, gift_card, gateway_options)
     end
 
+    before do
+      Spree::Config[:emails_must_match] = true
+    end
+
     let(:auth_amount) { gift_card.amount_remaining * 100 }
     let(:gift_card) { create(:gift_card) }
 
@@ -211,6 +233,18 @@ describe Spree::PaymentMethod::GiftCard do
 
       it "declines other email's gift card" do
         is_expected.to_not be_success
+      end
+    end
+
+    context "when the order email is not same as gift card email and emails_must_match=false" do
+      let(:gift_card) { create(:gift_card_with_other_email) }
+
+      before do
+        Spree::Config[:emails_must_match] = false
+      end
+
+      it "allows other email's gift card" do
+        is_expected.to be_success
       end
     end
 

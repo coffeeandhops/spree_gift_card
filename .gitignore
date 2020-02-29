@@ -16,3 +16,4 @@ coverage
 .ruby-gemset
 gemfiles/*.gemfile.lock
 .byebug_history
+.vscode
