@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe 'Order' do
+  before do
+    Spree::Config[:allow_gift_card_redeem] = true
+    Spree::Config[:emails_must_match] = true
+  end
+
   describe '#add_gift_card_payments' do
     let(:order_total) { 500.00 }
     let(:gift_card) { create(:gift_card) }

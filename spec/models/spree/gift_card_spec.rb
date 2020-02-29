@@ -492,6 +492,7 @@ describe Spree::GiftCard, type: :model do
       gift_card_category
       create(:secondary_credit_type)
       Spree::Config[:allow_gift_card_redeem] = true
+      Spree::Config[:emails_must_match] = true
       gift_card.update_column(:email, order.user.email)
       order.update_column(:completed_at, Time.current)
     end
@@ -586,5 +587,29 @@ describe Spree::GiftCard, type: :model do
         expect(gift_card.current_value).to eq(0.0)
       end
     end
+
+    context "when any email allowed and redemption is allowed and user email does not match gift card" do
+      let(:user) { create(:user) }
+      before do
+        Spree::Config[:allow_gift_card_redeem] = true
+        Spree::Config[:emails_must_match] = false
+      end
+
+      it "expects to return true" do
+        expect(safely_redeem).to be_truthy
+      end
+    end
+
+    context "when any email allowed and redemption is allowed" do
+      before do
+        Spree::Config[:allow_gift_card_redeem] = false
+        Spree::Config[:emails_must_match] = false
+      end
+
+      it "expects to return false" do
+        expect(safely_redeem).to be_falsey
+      end
+    end
+
   end
 end
