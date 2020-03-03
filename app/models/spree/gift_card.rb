@@ -11,7 +11,7 @@ module Spree
     belongs_to :variant
     belongs_to :line_item, required: false
 
-    has_many :transactions, class_name: 'Spree::GiftCardTransaction'
+    has_many :transactions, class_name: 'Spree::GiftCardTransaction', :dependent => :restrict_with_error
 
     validates :current_value, :name, :original_value, :code, :email, presence: true
 
@@ -20,6 +20,8 @@ module Spree
       validates :current_value, numericality: { greater_than_or_equal_to: 0 }
       validates :email, email: true
     end
+
+    # before_destroy :check_value
 
     validate :amount_remaining_is_positive, if: :current_value
 
@@ -216,5 +218,11 @@ module Spree
       Spree::Config.allow_gift_card_redeem && user && user.email == email && amount_remaining.to_f > 0.0 && line_item.order.completed?
     end
 
+    def check_value
+      if current_value != authorized_amount
+        errors.add(:base, "cannot delete gift card after it has been used")
+        return false
+      end
+    end
   end
 end

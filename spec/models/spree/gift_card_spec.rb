@@ -72,6 +72,15 @@ describe Spree::GiftCard, type: :model do
     expect(card.original_value).not_to be_nil
   end
 
+  describe "destroy" do
+    let(:variant) { create(:variant, price: 25) }
+    let(:gift_card) { create(:gift_card, variant: variant) }
+    it 'expects to destroy gift card when it has not been used' do
+      expect(gift_card.destroy).to be_truthy
+      expect(gift_card.errors.any?).to be_falsey
+    end  
+  end
+  
   context '#activatable?' do
     let(:gift_card) { create(:gift_card, variant: create(:variant, price: 25)) }
 
@@ -231,6 +240,12 @@ describe Spree::GiftCard, type: :model do
       it "expects to create a capture transaction for the given amount" do
         capture_payment
         expect(gift_card.transactions.where(action: Spree::GiftCard::CAPTURE_ACTION, amount: capture_amount, authorization_code: auth_code, order: order).exists?).to be_truthy
+      end
+
+      it 'expects not to destroy gift card when it has been used' do
+        capture_payment
+        expect { gift_card.destroy }.to_not change { Spree::GiftCard.count }
+        expect(gift_card.errors.messages[:base].first).to eq("Cannot delete record because dependent transactions exist")
       end
     end
 
@@ -612,4 +627,5 @@ describe Spree::GiftCard, type: :model do
     end
 
   end
+
 end
