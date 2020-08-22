@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :gift_card, class: Spree::GiftCard do
     email { 'spree@example.com' }
     name { 'Example User' }
+    senders_name { 'From Name'}
     variant
     line_item
     enabled { true }
@@ -10,6 +11,7 @@ FactoryBot.define do
   factory :disable_gift_card, class: Spree::GiftCard do
     email { 'spree@example.com' }
     name { 'Example User' }
+    senders_name { 'From Name'}
     variant
     line_item
   end
@@ -17,6 +19,7 @@ FactoryBot.define do
   factory :gift_card_with_other_email, class: Spree::GiftCard do
     email { 'spree123@example.com' }
     name { 'Example User' }
+    senders_name { 'From Name'}
     variant
     line_item
     enabled { true }

@@ -15,6 +15,14 @@
   </div>
 
   <div class="col-md-5">
+    <%= f.field_container :senders_name do %>
+      <%= f.label :senders_name %> <span class="required">*</span><br/>
+      <%= f.text_field :senders_name, class: 'form-control' %>
+      <%= f.error_message_on :senders_name %>
+    <% end %>
+  </div>
+
+  <div class="col-md-5">
     <%= f.field_container :note do %>
       <%= f.label :note %>
       <%= f.text_area :note, rows: 3, class: 'form-control' %>
