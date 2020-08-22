@@ -14,6 +14,6 @@ describe Spree::AppConfiguration do
   end
   
   it "expects to set preference allow_gift_card_redeem default to true"  do
-    expect(Spree::Config.emails_must_match).to eq(true)
+    expect(Spree::Config.emails_must_match).to eq(false)
   end
 end

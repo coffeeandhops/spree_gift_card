@@ -9,6 +9,7 @@ describe "Add to Cart", js: true do
     click_link 'Buy gift card'
     fill_in 'gift_card[email]', with: 'test@email.com'
     fill_in 'gift_card[name]', with: 'nom nom'
+    fill_in 'gift_card[senders_name]', with: 'SenderFirst SenderLast'
     click_button 'Add To Cart'
   end
 

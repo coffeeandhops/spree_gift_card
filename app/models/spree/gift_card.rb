@@ -13,7 +13,7 @@ module Spree
 
     has_many :transactions, class_name: 'Spree::GiftCardTransaction', :dependent => :restrict_with_error
 
-    validates :current_value, :name, :original_value, :code, :email, presence: true
+    validates :current_value, :name, :original_value, :code, :email, :senders_name, presence: true
 
     with_options allow_blank: true do
       validates :code, uniqueness: { case_sensitive: false }

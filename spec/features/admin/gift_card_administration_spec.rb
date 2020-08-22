@@ -25,6 +25,7 @@ feature "Admin Gift Card Administration", js: true do
     click_link 'New Gift Card'
     fill_in 'gift_card[email]', with: 'spree@example.com'
     fill_in 'gift_card[name]', with: 'First Last'
+    fill_in 'gift_card[senders_name]', with: 'SenderFirst SenderLast'
     fill_in 'gift_card[note]', with: 'Test message.'
     select '$50.00', from: 'Value'
     click_button 'Create'
@@ -41,6 +42,7 @@ feature "Admin Gift Card Administration", js: true do
     click_link 'New Gift Card'
     fill_in 'gift_card[email]', with: 'example.com'
     fill_in 'gift_card[name]', with: 'First Last'
+    fill_in 'gift_card[senders_name]', with: 'SenderFirst SenderLast'
     fill_in 'gift_card[note]', with: 'Test message.'
     select '$50.00', from: 'Value'
     click_button 'Create'
@@ -66,6 +68,7 @@ feature "Admin Gift Card Administration", js: true do
     find('[data-action="edit"]').click
     fill_in 'gift_card[email]', with: 'spree@example.com'
     fill_in 'gift_card[name]', with: 'First Last'
+    fill_in 'gift_card[senders_name]', with: 'SenderFirst SenderLast'
     fill_in 'gift_card[note]', with: 'Test message.'
     click_button 'Update'
     expect(page).to have_content("Gift card \"First Last\" has been successfully updated!")
