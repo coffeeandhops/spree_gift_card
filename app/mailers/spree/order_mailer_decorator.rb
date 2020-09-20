@@ -6,7 +6,8 @@ Spree::OrderMailer.class_eval do
     @gift_card.update_attribute(:sent_at, Time.now)
     store = ::Spree::Store.where(default: true).first
     use_store_name = !store.nil? && Spree::Config.use_store_name_as_email
-    address_or_name = use_store_name ? store.name : from_address
+    address_or_name = use_store_name ? %(#{store.name} <#{from_address}>) : from_address
+
     mail(to: @gift_card.email, from: address_or_name, subject: subject)
   end
 end
