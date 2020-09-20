@@ -2,6 +2,7 @@ en:
   spree:
     allow_gift_card_redeem: "Allow Gift Card to be Redeemed"
     emails_must_match: "Gift card email must match order email"
+    use_store_name_as_email: "Use store name as the from email address"
     apply: "Apply"
     back_to_gift_cards_list: "Back to Gift Cards List"
     buy_gift_card: "Buy gift card"
