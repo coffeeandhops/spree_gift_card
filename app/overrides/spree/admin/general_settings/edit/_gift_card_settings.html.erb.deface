@@ -24,6 +24,13 @@
               <%= Spree.t(:emails_must_match) %>
             <% end %>
           </div>
+          <div class="form-group">
+            <%= label_tag :use_store_name_as_email do %>
+              <%= hidden_field_tag :use_store_name_as_email, 0 %>
+              <%= check_box_tag :use_store_name_as_email, 1, Spree::Config.use_store_name_as_email %>
+              <%= Spree.t(:use_store_name_as_email) %>
+            <% end %>
+          </div>          
         </div>
       </div>
     </div>
