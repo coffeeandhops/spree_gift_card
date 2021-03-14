@@ -1,5 +1,8 @@
 module SpreeGiftCard
   module OrderDecorator
+    def self.prepended(base)
+      base.include ::Spree::Order::GiftCard
+    end
 
     def finalize!
       card_items = line_items.joins(:product).where("spree_products.is_gift_card = ?", true)
